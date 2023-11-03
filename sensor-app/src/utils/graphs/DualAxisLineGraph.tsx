@@ -9,8 +9,6 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { AvgUpstairsEnvData } from "../../types/sensor-data";
-import { hpaToMmHg } from "../../utils/sensor-utils";
 
 ChartJS.register(
   CategoryScale,
@@ -22,34 +20,39 @@ ChartJS.register(
   Legend
 );
 
-export default function PressureAndHumidityGraph({
-  upstairsEnvData,
-}: {
-  upstairsEnvData: AvgUpstairsEnvData[];
-}) {
+export type GraphData = {
+  labels: string[];
+  y: number[];
+  y1: number[];
+};
+export type Graph = {
+  data: GraphData;
+  options: {
+    dataLabels: { y: string; y1: string };
+    dataColors: { y: string; y1: string };
+    title: string;
+    axisLabels: { y: string; y1: string };
+  };
+};
 
-  const labels = upstairsEnvData.map((item) =>
-    new Date(item.interval_beginning).toLocaleString()
-  );
-  const humidity = upstairsEnvData.map((item) => item.humidity);
-  const pressure = upstairsEnvData.map((item) => hpaToMmHg(item.pressure));
-
+export default function DualAxisLineGraph({ graph }: { graph: Graph }) {
+  const { data, options } = graph;
   return (
     <Line
       data={{
-        labels: labels,
+        labels: data.labels,
         datasets: [
           {
-            data: humidity,
-            label: "% Relative Humidity",
-            borderColor: "#3cba9f",
+            data: data.y,
+            label: options.dataLabels.y,
+            borderColor: options.dataColors.y,
             fill: false,
             yAxisID: "y",
           },
           {
-            data: pressure,
-            label: "mmHg",
-            borderColor: "red",
+            data: data.y1,
+            label: options.dataLabels.y1,
+            borderColor: options.dataColors.y1,
             fill: false,
             yAxisID: "y1",
           },
@@ -64,7 +67,7 @@ export default function PressureAndHumidityGraph({
         plugins: {
           title: {
             display: true,
-            text: "Upstairs Environment Humidity & Pressure",
+            text: options.title,
           },
         },
         scales: {
@@ -72,13 +75,22 @@ export default function PressureAndHumidityGraph({
             type: "linear",
             display: true,
             position: "left",
+            title: {
+              display: true,
+              text: options.axisLabels.y,
+            },
           },
+
           y1: {
             type: "linear",
             display: true,
             position: "right",
             grid: {
               drawOnChartArea: false,
+            },
+            title: {
+              display: true,
+              text: options.axisLabels.y1,
             },
           },
         },

@@ -1,17 +1,14 @@
-import { UPSTAIRS_ENV, BOILER_TEMP } from "../constants/sensor-topics";
+import { SensorTopics } from "../constants/sensor-topics";
 
 export type TopicToResponseTypeAvg = {
-  [UPSTAIRS_ENV]: AvgUpstairsEnvDataResponse;
-  [BOILER_TEMP]: AvgBoilerTempDataResponse;
+  [SensorTopics.UPSTAIRS_ENV]: AvgUpstairsEnvDataResponse;
+  [SensorTopics.BOILER_TEMP]: AvgBoilerTempDataResponse;
 };
 
 export type TopicToResponseType = {
-  [UPSTAIRS_ENV]: UpstairsEnvDataResponse;
-  [BOILER_TEMP]: BoilerTempDataResponse;
+  [SensorTopics.UPSTAIRS_ENV]: UpstairsEnvDataResponse;
+  [SensorTopics.BOILER_TEMP]: BoilerTempDataResponse;
 };
-
-
-export type SensorTopics = typeof UPSTAIRS_ENV | typeof BOILER_TEMP;
 
 export type SensorData<T> = T & {
   id: string;
@@ -48,13 +45,11 @@ export type SensorDataResponse<T> = {
   data: T[];
 };
 
-export type AvgUpstairsEnvData = AvgSensorData<UpstairsEnvData>
-export type AvgBoilerTempData = AvgSensorData<BoilerTempData>
+export type AvgUpstairsEnvData = AvgSensorData<UpstairsEnvData>;
+export type AvgBoilerTempData = AvgSensorData<BoilerTempData>;
 
 export type UpstairsEnvDataResponse = SensorDataResponse<UpstairsEnvData>;
 export type BoilerTempDataResponse = SensorDataResponse<BoilerTempData>;
 
 export type AvgUpstairsEnvDataResponse = AvgSensorResponse<UpstairsEnvData>;
 export type AvgBoilerTempDataResponse = AvgSensorResponse<BoilerTempData>;
-
-

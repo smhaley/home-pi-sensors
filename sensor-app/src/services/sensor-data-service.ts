@@ -2,9 +2,9 @@ import { get } from "./api/api";
 import {
   TopicToResponseType,
   TopicToResponseTypeAvg,
-  SensorTopics,
 } from "../types/sensor-data";
 import { Intervals } from "../constants/sensor-data-intervals";
+import { SensorTopics } from "../constants/sensor-topics";
 
 type SensorToResponseType<T> = T extends SensorTopics
   ? TopicToResponseType[T]
