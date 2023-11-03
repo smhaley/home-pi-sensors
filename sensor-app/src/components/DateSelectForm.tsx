@@ -6,6 +6,7 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { Box, Button } from "@mui/material";
 import { Intervals } from "../constants/sensor-data-intervals";
+import { subDays } from "date-fns";
 
 const AFTER = "after";
 const BETWEEN = "between";
@@ -21,9 +22,7 @@ export default function DateSelectForm({
   };
   const [rangeType, setRangeType] = useState(AFTER);
   const [timeInterval, setTimeInterval] = useState(Intervals.FIVE_MINUTES);
-  const [dateRange, setDateRange] = useState<Date[]>([
-    new Date("2023-10-26T17:16:30.515Z"),
-  ]);
+  const [dateRange, setDateRange] = useState<Date[]>([subDays(new Date(), 1)]);
   const [errors, setErrors] = useState(baseError);
 
   const handleRangeTypeChange = (event: SelectChangeEvent) => {
