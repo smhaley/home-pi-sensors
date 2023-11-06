@@ -64,8 +64,11 @@ export default function DateSelectForm({
     if (err.pickerOne.error || err.pickerZero.error) {
       return setErrors(err);
     }
+    setErrors(baseError);
     return handleDateChange(dateRange, timeInterval);
   };
+
+  console.log(errors.pickerOne.error);
 
   return (
     <form onSubmit={handleSubmit}>

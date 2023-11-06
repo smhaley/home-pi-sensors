@@ -14,11 +14,18 @@ import { SensorTopics } from "./constants/sensor-topics";
 import AppBar from "./components/AppBar";
 import DateSelectForm from "./components/DateSelectForm";
 import { Intervals } from "./constants/sensor-data-intervals";
-import { Container, Alert, Stack, Box } from "@mui/material";
+import { Container, Alert, Stack } from "@mui/material";
 import DualAxisLineGraph from "./components/DualAxisLineGraph";
 import { buildTempGraph } from "./utils/graphs/builders/temp-graph";
 import { buildUpstairsEnvGraph } from "./utils/graphs/builders/upstairs-env";
 import { subDays } from "date-fns";
+import styled from "@emotion/styled";
+import { grey } from "@mui/material/colors";
+
+const StyledHR = styled.hr`
+  color: ${grey[300]};
+  margin: 20px;
+`;
 
 export default function App() {
   const [upstairsEnvData, setUpstairsEnvData] = useState<AvgUpstairsEnvData[]>(
@@ -106,17 +113,16 @@ export default function App() {
         <div>
           <DateSelectForm handleDateChange={handleDateChange} />
         </div>
+
+        <StyledHR />
         {upstairsEnvData && boilerTempData && (
-          <Box sx={{ p: 3 }}>
-            <DualAxisLineGraph
-              graph={buildTempGraph(upstairsEnvData, boilerTempData)}
-            />
-          </Box>
+          <DualAxisLineGraph
+            graph={buildTempGraph(upstairsEnvData, boilerTempData)}
+          />
         )}
+        <StyledHR />
         {upstairsEnvData && (
-          <Box sx={{ p: 3 }}>
-            <DualAxisLineGraph graph={buildUpstairsEnvGraph(upstairsEnvData)} />
-          </Box>
+          <DualAxisLineGraph graph={buildUpstairsEnvGraph(upstairsEnvData)} />
         )}
       </Container>
     </>
