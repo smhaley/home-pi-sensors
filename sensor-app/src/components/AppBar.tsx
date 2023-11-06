@@ -15,8 +15,6 @@ export default function ButtonAppBar() {
 
   const {toggleColorMode} = useContext(MUIWrapperContext)
 
-
-  console.log(theme.palette.mode)
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">

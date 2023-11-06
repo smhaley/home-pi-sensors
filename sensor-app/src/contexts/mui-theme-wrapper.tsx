@@ -2,6 +2,8 @@ import {  CssBaseline, PaletteMode, ThemeProvider } from "@mui/material";
 import { createContext, useMemo, useState } from "react";
 import { createChartTheme } from "../themes/theme";
 
+const MODE = 'mode'
+
 export const MUIWrapperContext = createContext({
   toggleColorMode: () => {},
 });
@@ -12,7 +14,8 @@ export default function MUIWrapper({
 }: {
   children: React.ReactNode;
 }) {
-  const [mode, setMode] = useState<PaletteMode>("light");
+  const existingMode = localStorage.getItem(MODE) as PaletteMode ?? 'light'
+  const [mode, setMode] = useState<PaletteMode>(existingMode);
   const muiWrapperUtils = useMemo(
     () => ({
       toggleColorMode: () => {
@@ -23,8 +26,9 @@ export default function MUIWrapper({
   );
 
   const theme = useMemo(
-    () =>
-      createChartTheme(mode),
+    () =>{
+      localStorage.setItem(MODE, mode)
+      return createChartTheme(mode)},
     [mode]
   );
   

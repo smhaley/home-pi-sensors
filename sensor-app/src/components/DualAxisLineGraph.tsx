@@ -39,7 +39,6 @@ export type Graph = {
 export default function DualAxisLineGraph({ graph }: { graph: Graph }) {
   const { data, options } = graph;
   const theme = useTheme();
-  console.log(theme.chart.gridLines);
   return (
     <Line
       data={{
