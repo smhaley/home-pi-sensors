@@ -39,7 +39,7 @@ export type Graph = {
 export default function DualAxisLineGraph({ graph }: { graph: Graph }) {
   const { data, options } = graph;
   const theme = useTheme();
-  console.log(theme.custom);
+  console.log(theme.chart.gridLines);
   return (
     <Line
       data={{
@@ -71,35 +71,35 @@ export default function DualAxisLineGraph({ graph }: { graph: Graph }) {
           title: {
             display: true,
             text: options.title,
-            // color: "#fff",
+            color: theme.chart.title,
           },
           legend: {
             labels: {
-              // color: "#fff",
+              color: theme.chart.title,
             },
           },
         },
         scales: {
           x: {
             grid: {
-              // color: "#6b6a6a",
+              color: theme.chart.gridLines
             },
             ticks: {
-              // color: "#fff", // Change to your desired color
+              color: theme.chart.ticks, // Change to your desired color
             },
           },
           y: {
             grid: {
-              // color: "#6b6a6a",
+              color: theme.chart.gridLines,
             },
             ticks: {
-              // color: "#fff", // Change to your desired color
+             color: theme.chart.ticks, // Change to your desired color
             },
             type: "linear",
             display: true,
             position: "left",
             title: {
-              // color: "#fff",
+              color: theme.chart.title,
               display: true,
               text: options.axisLabels.y,
             },
@@ -107,7 +107,7 @@ export default function DualAxisLineGraph({ graph }: { graph: Graph }) {
 
           y1: {
             ticks: {
-              color: "#fff", // Change to your desired color
+              color: theme.chart.ticks, // Change to your desired color
             },
             type: "linear",
             display: true,
@@ -116,7 +116,7 @@ export default function DualAxisLineGraph({ graph }: { graph: Graph }) {
               drawOnChartArea: false,
             },
             title: {
-              color: "#fff",
+              color: theme.chart.title ,
               display: true,
               text: options.axisLabels.y1,
             },
