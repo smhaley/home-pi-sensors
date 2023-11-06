@@ -6,6 +6,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "nodemon src/index.ts",
+    "build": "",
     "typeorm:generate": "npx typeorm-ts-node-esm migration:generate -d src/db/data-source.ts",
     "typeorm:migrate": "npx typeorm-ts-node-esm migration:run -d src/db/data-source.ts",
     "typeorm:revert": "npx typeorm-ts-node-esm migration:revert -d src/db/data-source.ts",
@@ -25,7 +26,6 @@
   },
   "devDependencies": {
     "@types/node": "^20.8.8",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.2.2"
+    "ts-node": "^10.9.1"
   }
 }

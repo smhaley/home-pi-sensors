@@ -1,0 +1,28 @@
+{
+  "name": "home-monitor",
+  "version": "1.0.0",
+  "description": "",
+  "workspaces": [
+    "packages/mqtt-client-service",
+    "packages/sensor-app"
+  ],
+  "scripts": {
+    "dev": "concurrently \"cd ./packages/mqtt-client-service && npm run dev\" \"cd ./packages/sensor-app && npm run dev\" "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smhaley/home-pi-sensors.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/smhaley/home-pi-sensors/issues"
+  },
+  "homepage": "https://github.com/smhaley/home-pi-sensors#readme",
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "rimraf": "^5.0.5",
+    "shelljs": "^0.8.5",
+    "typescript": "^5.2.2"
+  }
+}
