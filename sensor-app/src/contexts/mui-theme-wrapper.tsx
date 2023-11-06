@@ -1,22 +1,24 @@
-import {  CssBaseline, PaletteMode, ThemeProvider } from "@mui/material";
+import { CssBaseline, PaletteMode, ThemeProvider } from "@mui/material";
 import { createContext, useMemo, useState } from "react";
 import { createChartTheme } from "../themes/theme";
-import useMediaQuery from '@mui/material/useMediaQuery';
+import useMediaQuery from "@mui/material/useMediaQuery";
 
-const MODE = 'mode'
+const MODE = "mode";
 
 export const MUIWrapperContext = createContext({
   toggleColorMode: () => {},
 });
-
 
 export default function MUIWrapper({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const existingMode = localStorage.getItem(MODE) as PaletteMode
-  const initialMode = useMediaQuery('(prefers-color-scheme: dark)') && existingMode !== 'light' ? 'dark' : 'light';
+  const existingMode = localStorage.getItem(MODE) as PaletteMode;
+  const initialMode =
+    useMediaQuery("(prefers-color-scheme: dark)") && existingMode !== "light"
+      ? "dark"
+      : "light";
 
   const [mode, setMode] = useState<PaletteMode>(initialMode);
   const muiWrapperUtils = useMemo(
@@ -28,19 +30,17 @@ export default function MUIWrapper({
     []
   );
 
-  const theme = useMemo(
-    () =>{
-      localStorage.setItem(MODE, mode)
-      return createChartTheme(mode)},
-    [mode]
-  );
-  
+  const theme = useMemo(() => {
+    localStorage.setItem(MODE, mode);
+    return createChartTheme(mode);
+  }, [mode]);
+
   return (
     <MUIWrapperContext.Provider value={muiWrapperUtils}>
       <ThemeProvider theme={theme}>
-        <CssBaseline/>
+        <CssBaseline />
         {children}
-        </ThemeProvider>
+      </ThemeProvider>
     </MUIWrapperContext.Provider>
   );
 }

@@ -131,3 +131,8 @@ dist
 
 secrets.py
 envs/
+
+fiddle.py
+fiddle.js
+notes.mdx
+.vscode/

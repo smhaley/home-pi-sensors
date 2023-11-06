@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
 import "./App.css";
+import { useState, useEffect } from "react";
 import {
   getAvgSensorDataAfter,
   getAvgSensorDataBetween,
@@ -14,12 +14,11 @@ import { SensorTopics } from "./constants/sensor-topics";
 import AppBar from "./components/AppBar";
 import DateSelectForm from "./components/DateSelectForm";
 import { Intervals } from "./constants/sensor-data-intervals";
-import { Container, Alert, Stack } from "@mui/material";
+import { Container, Alert, Stack, Box } from "@mui/material";
 import DualAxisLineGraph from "./components/DualAxisLineGraph";
 import { buildTempGraph } from "./utils/graphs/builders/temp-graph";
 import { buildUpstairsEnvGraph } from "./utils/graphs/builders/upstairs-env";
 import { subDays } from "date-fns";
-import {Box} from '@mui/material'
 
 export default function App() {
   const [upstairsEnvData, setUpstairsEnvData] = useState<AvgUpstairsEnvData[]>(
@@ -34,7 +33,6 @@ export default function App() {
     sensorTopics: SensorTopics[],
     responses: (AvgUpstairsEnvDataResponse | AvgBoilerTempDataResponse)[]
   ) => {
-    
     responses.forEach((response, index) => {
       if (sensorTopics[index] === SensorTopics.BOILER_TEMP) {
         setBoilerTempData((response as AvgBoilerTempDataResponse).data);
@@ -94,37 +92,33 @@ export default function App() {
   return (
     <>
       <AppBar />
-        {showTruncatedAlert && (
-          <Container>
-            <Stack spacing={2}>
-              <Alert variant="outlined" severity="error">
-                The current data selection is truncated and only showing the
-                first 1000 results.
-              </Alert>
-            </Stack>
-          </Container>
-        )}
-     <Container maxWidth = {false} 
-     role="main" sx={{ p: 5}}>
-
-<div>
-        <DateSelectForm handleDateChange={handleDateChange} />
+      {showTruncatedAlert && (
+        <Container>
+          <Stack spacing={2}>
+            <Alert variant="outlined" severity="error">
+              The current data selection is truncated and only showing the first
+              1000 results.
+            </Alert>
+          </Stack>
+        </Container>
+      )}
+      <Container maxWidth={false} role="main" sx={{ p: 5 }}>
+        <div>
+          <DateSelectForm handleDateChange={handleDateChange} />
         </div>
         {upstairsEnvData && boilerTempData && (
-          <Box sx = {{p: 3}}>
-          <DualAxisLineGraph
-            graph={buildTempGraph(upstairsEnvData, boilerTempData)}
-          />
-        </Box>          
-
-        )}
-        {upstairsEnvData && (
-          <Box sx = {{p:3}}>
-          <DualAxisLineGraph graph={buildUpstairsEnvGraph(upstairsEnvData)} />
+          <Box sx={{ p: 3 }}>
+            <DualAxisLineGraph
+              graph={buildTempGraph(upstairsEnvData, boilerTempData)}
+            />
           </Box>
         )}
-
-        </Container>
+        {upstairsEnvData && (
+          <Box sx={{ p: 3 }}>
+            <DualAxisLineGraph graph={buildUpstairsEnvGraph(upstairsEnvData)} />
+          </Box>
+        )}
+      </Container>
     </>
   );
 }
