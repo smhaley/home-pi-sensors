@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
+    "start": "node src/index.js",
+    "build": "tsc -p . && cp package.json dist && mkdir dist/envs && cp envs/production.env dist/envs/production.env",
     "dev": "nodemon src/index.ts",
-    "build": "",
     "typeorm:generate": "npx typeorm-ts-node-esm migration:generate -d src/db/data-source.ts",
     "typeorm:migrate": "npx typeorm-ts-node-esm migration:run -d src/db/data-source.ts",
     "typeorm:revert": "npx typeorm-ts-node-esm migration:revert -d src/db/data-source.ts",
@@ -16,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "@fastify/helmet": "^11.1.1",
+    "@fastify/static": "^6.12.0",
     "dotenv": "^16.3.1",
     "fastify": "^4.24.3",
     "mqtt": "^5.1.3",

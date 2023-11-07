@@ -20,7 +20,7 @@ export default function ButtonAppBar() {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Sensor Home
+          ⚡ Sensor Home ⚡
           </Typography>
           <IconButton
           onClick={toggleColorMode}

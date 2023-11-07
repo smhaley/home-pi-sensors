@@ -7,7 +7,11 @@
     "packages/sensor-app"
   ],
   "scripts": {
-    "dev": "concurrently \"cd ./packages/mqtt-client-service && npm run dev\" \"cd ./packages/sensor-app && npm run dev\" "
+    "clean": "rimraf ./packages/mqtt-client-service/dist && rimraf ./packages/sensor-app/dist",
+    "dev": "concurrently \"cd ./packages/mqtt-client-service && npm run dev\" \"cd ./packages/sensor-app && npm run dev\" ",
+    "build:assets": "npm run build --workspaces",
+    "build:application": "node ./tools/copy-assets.js",
+    "build": "npm run clean && npm run build:assets && npm run build:application"
   },
   "repository": {
     "type": "git",

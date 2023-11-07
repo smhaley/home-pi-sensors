@@ -2,12 +2,12 @@ import { FastifyInstance, FastifyPluginOptions } from "fastify";
 import {
   getSensorData,
   getAvgSensorData,
-} from "../../controllers/sensor-data-controllers";
+} from "../../../controllers/sensor-data-controllers";
 
 import {
   validTopicTableHook,
   validQueryTypeHook,
-} from "../../hooks/sensorDataHooks/valid-request-params.hooks";
+} from "../../../hooks/sensorDataHooks/valid-request-params.hooks";
 
 export const sensorDataRoutes = (
   fastify: FastifyInstance,

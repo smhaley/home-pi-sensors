@@ -1,6 +1,6 @@
 import { FastifyInstance, FastifyPluginOptions } from "fastify";
-import { getVersion } from "../controllers/api-controllers";
-import { sensorDataRoutes } from "./api/sensorData";
+import { getVersion } from "../../controllers/api-controllers";
+import { sensorDataRoutes } from "./sensorData/sensorData-routes";
 export const apiRoutes = (
   fastify: FastifyInstance,
   _opts: FastifyPluginOptions,
