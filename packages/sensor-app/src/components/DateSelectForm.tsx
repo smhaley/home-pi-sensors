@@ -68,8 +68,6 @@ export default function DateSelectForm({
     return handleDateChange(dateRange, timeInterval);
   };
 
-  console.log(errors.pickerOne.error);
-
   return (
     <form onSubmit={handleSubmit}>
       <Box sx={{ display: "flex", flexDirection: "column", m: 2 }}>

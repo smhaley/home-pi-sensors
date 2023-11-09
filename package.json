@@ -9,6 +9,7 @@
   "scripts": {
     "clean": "rimraf ./packages/mqtt-client-service/dist && rimraf ./packages/sensor-app/dist",
     "dev": "concurrently \"cd ./packages/mqtt-client-service && npm run dev\" \"cd ./packages/sensor-app && npm run dev\" ",
+    "build:db": "npm run typeorm:migrate --workspace=packages/mqtt-client-service",
     "build:assets": "npm run build --workspaces",
     "build:application": "node ./tools/copy-assets.js",
     "build": "npm run clean && npm run build:assets && npm run build:application"
