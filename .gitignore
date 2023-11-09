@@ -130,7 +130,8 @@ dist
 .pnp.*
 
 secrets.py
-envs/
+
+production.env
 
 fiddle.py
 fiddle.js
