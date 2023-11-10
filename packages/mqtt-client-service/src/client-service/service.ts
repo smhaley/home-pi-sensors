@@ -1,8 +1,7 @@
 import Fastify from "fastify";
 import { apiRoutes } from "./routes/api/api-routes";
-import helmet from "@fastify/helmet";
 import fastifyStatic from "@fastify/static";
-import * as path from 'path';
+import * as path from "path";
 
 export const buildFastifyService = () => {
   const fastify = Fastify({
@@ -14,7 +13,6 @@ export const buildFastifyService = () => {
     root: path.join(__dirname, "public"),
   });
 
-  fastify.register(helmet);
   fastify.register(apiRoutes, {
     prefix: "/api",
   });

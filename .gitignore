@@ -131,8 +131,6 @@ dist
 
 secrets.py
 
-production.env
-
 fiddle.py
 fiddle.js
 notes.mdx
