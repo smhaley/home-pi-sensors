@@ -47,6 +47,7 @@ export const getSensorData = async (
     >(entity)
       .createQueryBuilder()
       .where(queryCondition)
+      .orderBy("timestamp")
       .skip(offset <= 1000 ? offset : 1000)
       .take(size)
       .getManyAndCount();

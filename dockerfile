@@ -2,7 +2,6 @@
 FROM node:16-alpine AS build
 WORKDIR /app
 COPY . .
-RUN cat package.json
 RUN npm i --loglevel verbose
 COPY . .
 RUN npm run build

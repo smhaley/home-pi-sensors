@@ -11,6 +11,9 @@ services:
       - 6543:5432
     networks:
      - app-network
+    restart: always
+    volumes:
+     - postgres-data:/home-sensors/var/lib/postgresql/data
   app:
     build:
       context: .
@@ -23,5 +26,8 @@ services:
       - 8070:3002
     networks:
      - app-network
+    restart: always
 networks:
  app-network:
+volumes:
+ postgres-data:
