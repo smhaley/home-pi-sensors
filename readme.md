@@ -26,3 +26,13 @@ DB_USERNAME=blah
 DB_PASSWORD=blah
 DB_DATABASE=blah
 ```
+
+# Dev
+Running with `development.env` configs:
+```
+docker run --name mqtt_db -e POSTGRES_HOST=localhost -e POSTGRES_PORT=5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=mqtt postgres:latest
+```
+Run db Migrations:
+`npm run build:db`
+
+

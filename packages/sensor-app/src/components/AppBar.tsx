@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import { MUIWrapperContext } from "../contexts/mui-theme-wrapper";
 import { LightMode, DarkMode } from "@mui/icons-material";
 import { useTheme } from "@mui/material";
-
+import Settings from './Settings'
 
 export default function ButtonAppBar() {
 
@@ -22,6 +22,7 @@ export default function ButtonAppBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           ⚡ Sensor Home ⚡
           </Typography>
+          <Settings />
           <IconButton
           onClick={toggleColorMode}
 

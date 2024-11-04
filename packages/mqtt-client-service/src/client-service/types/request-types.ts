@@ -34,3 +34,9 @@ export type AvgDataRequest = FastifyRequest<{
   Params: BaseRequestParams;
   Querystring: AvgIntervalQuery;
 }>;
+
+export type UiSettingsRequest = FastifyRequest<{
+  Body: {
+    settings?: Record<string, boolean>;
+  };
+}>;

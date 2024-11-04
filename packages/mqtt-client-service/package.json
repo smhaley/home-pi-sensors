@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
+    "compiler-check": "tsc --noEmit",
     "build": "tsc -p . && cp package.json dist && mkdir dist/envs && cp envs/production.env dist/envs/production.env",
     "dev": "nodemon src/index.ts",
     "typeorm:generate": "npx typeorm-ts-node-esm migration:generate -d src/db/data-source.ts",

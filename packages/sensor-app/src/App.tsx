@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import {
   getAvgSensorDataAfter,
   getAvgSensorDataBetween,
@@ -15,14 +15,14 @@ import AppBar from "./components/AppBar";
 import DateSelectForm from "./components/DateSelectForm";
 import { Intervals } from "./constants/sensor-data-intervals";
 import { Container, Alert, Stack } from "@mui/material";
-import DualAxisLineGraph from "./components/DualAxisLineGraph";
-import { buildTempGraph } from "./utils/graphs/builders/temp-graph";
-import { buildUpstairsEnvGraph } from "./utils/graphs/builders/upstairs-env";
 import { subDays } from "date-fns";
 import styled from "@emotion/styled";
 import { grey } from "@mui/material/colors";
+import { SettingsContext } from "./providers/settings-context";
+import { extractTopicsFromSettings } from "./utils/sensor-utils";
+import SensorView from "./components/DataView";
 
-const StyledHR = styled.hr`
+export const StyledHR = styled.hr`
   color: ${grey[300]};
   margin: 20px;
 `;
@@ -31,6 +31,7 @@ export default function App() {
   const [upstairsEnvData, setUpstairsEnvData] = useState<AvgUpstairsEnvData[]>(
     []
   );
+  const { isLoading = true, settings } = useContext(SettingsContext);
 
   const [boilerTempData, setBoilerTempData] = useState<AvgBoilerTempData[]>([]);
   const showTruncatedAlert =
@@ -49,25 +50,25 @@ export default function App() {
     });
   };
 
-  useEffect(() => {
-    const sensorTopics = [SensorTopics.BOILER_TEMP, SensorTopics.UPSTAIRS_ENV];
+  const loadDefaultData = async (sensorTopics: SensorTopics[]) => {
     const afterDate = subDays(new Date(), 1);
-    Promise.all(
+    const responses = await Promise.all(
       sensorTopics.map((topic) =>
         getAvgSensorDataAfter(topic, afterDate.toISOString())
       )
-    ).then(
-      (
-        responses: (AvgUpstairsEnvDataResponse | AvgBoilerTempDataResponse)[]
-      ) => {
-        setNewSensorData(sensorTopics, responses);
-      }
     );
-  }, []);
+    setNewSensorData(sensorTopics, responses);
+  };
+
+  useEffect(() => {
+    if (isLoading) return;
+    const availableSettings = extractTopicsFromSettings(settings);
+    loadDefaultData(availableSettings);
+  }, [isLoading]);
 
   const handleDateChange = async (dateRange: Date[], interval: Intervals) => {
     const transformedRange = dateRange.map((date) => date.toISOString());
-    const sensorTopics = [SensorTopics.BOILER_TEMP, SensorTopics.UPSTAIRS_ENV];
+    const sensorTopics = extractTopicsFromSettings(settings);
 
     const promises: Promise<
       AvgUpstairsEnvDataResponse | AvgBoilerTempDataResponse
@@ -96,6 +97,7 @@ export default function App() {
     setNewSensorData(sensorTopics, responses);
   };
 
+  if (isLoading) return null;
   return (
     <>
       <AppBar />
@@ -113,17 +115,11 @@ export default function App() {
         <div>
           <DateSelectForm handleDateChange={handleDateChange} />
         </div>
-
         <StyledHR />
-        {upstairsEnvData && boilerTempData && (
-          <DualAxisLineGraph
-            graph={buildTempGraph(upstairsEnvData, boilerTempData)}
-          />
-        )}
-        <StyledHR />
-        {upstairsEnvData && (
-          <DualAxisLineGraph graph={buildUpstairsEnvGraph(upstairsEnvData)} />
-        )}
+        <SensorView
+          boilerTempData={boilerTempData}
+          upstairsEnvData={upstairsEnvData}
+        />
       </Container>
     </>
   );
