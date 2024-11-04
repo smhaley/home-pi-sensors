@@ -20,6 +20,7 @@ services:
       dockerfile: dockerfile
     environment:
       - NODE_ENV=production
+      - MQTT_HOST=decentservice.xyz
     depends_on:
       - postgres
     ports:

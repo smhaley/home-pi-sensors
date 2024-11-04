@@ -1,4 +1,4 @@
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useContext, useEffect } from "react";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -7,6 +7,7 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { Box, Button } from "@mui/material";
 import { Intervals } from "../constants/sensor-data-intervals";
 import { subDays } from "date-fns";
+import { SettingsContext } from "../providers/settings-context";
 
 const AFTER = "after";
 const BETWEEN = "between";
@@ -24,6 +25,12 @@ export default function DateSelectForm({
   const [timeInterval, setTimeInterval] = useState(Intervals.FIVE_MINUTES);
   const [dateRange, setDateRange] = useState<Date[]>([subDays(new Date(), 1)]);
   const [errors, setErrors] = useState(baseError);
+
+  const { settings } = useContext(SettingsContext);
+
+  useEffect(() => {
+    handleDateChange(dateRange, timeInterval);
+  }, [settings]);
 
   const handleRangeTypeChange = (event: SelectChangeEvent) => {
     setRangeType(event.target.value);
